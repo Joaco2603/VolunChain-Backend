@@ -5,7 +5,7 @@ Unlike other modules in the application, its architecture is slightly different,
 
 # 🔑 Key Architectural Differences
 
-No use cases or repositories are used.
+No use cases or repositories are used, only maintained Entity to get easy access on this information, but this Entity is generate for mi adapter, adapter interface required a return of PhotoEntity.
 The flow is more direct:
 
 Controller → calls the Adapter for Supabase Storage and Prisma for persistence.
