@@ -1,4 +1,5 @@
 import { UserEntity } from "../../domain/entities/User.entity";
+import { UpdateUserDto } from "../../presentation/dto";
 
 export interface IUserRepository {
   createUser(
@@ -19,7 +20,10 @@ export interface IUserRepository {
     token: string,
     expires: Date
   ): Promise<void>;
+  updateUser(data: UpdateUserDto): Promise<void>;
+  deleteUser(id: string): Promise<void>;
   findByVerificationToken(token: string): Promise<UserEntity | null>;
+  findAll(page: number, pageSize: number): Promise<UserEntity[]>;
   updateVerificationStatus(userId: string): Promise<void>;
   isUserVerified(userId: string): Promise<boolean>;
 }

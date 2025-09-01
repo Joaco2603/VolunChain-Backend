@@ -1,5 +1,17 @@
 import { BaseEntity } from "@/modules/shared/domain/entities/base.entity";
 
+export interface IUserProps {
+  id: string;
+  name: string;
+  lastName: string;
+  email: string;
+  password: string;
+  wallet: string;
+  isVerified?: boolean;
+  verificationToken?: string | null;
+  verificationTokenExpires?: Date | null;
+}
+
 export class UserEntity extends BaseEntity {
   id: string;
   name: string;

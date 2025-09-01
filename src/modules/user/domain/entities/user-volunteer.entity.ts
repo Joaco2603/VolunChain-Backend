@@ -1,4 +1,4 @@
-import { UserEntity } from "./User.entity";
+import { IUserProps, UserEntity } from "./User.entity";
 import { InvalidUserDataException } from "../exceptions/user.exceptions";
 
 export class UserVolunteer extends UserEntity {
@@ -43,7 +43,7 @@ export class UserVolunteer extends UserEntity {
 
   // Implementación que maneja ambos casos
   public static create(
-    propsOrBaseUser: unknown,
+    propsOrBaseUser: IUserProps,
     volunteerId?: string
   ): UserVolunteer {
     if (!volunteerId) {
@@ -52,12 +52,7 @@ export class UserVolunteer extends UserEntity {
         "Volunteer ID is required"
       );
     }
-    if (!propsOrBaseUser.volunteerId) {
-      throw new InvalidUserDataException(
-        "volunteerId",
-        "Volunteer ID is required"
-      );
-    }
+
     return new UserVolunteer({
       id: propsOrBaseUser.id,
       name: propsOrBaseUser.name,
