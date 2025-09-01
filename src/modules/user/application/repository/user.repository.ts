@@ -1,4 +1,4 @@
-import { UserEntity } from "../../domain/entities/user.entity";
+import { UserEntity } from "../../domain/entities/User.entity";
 
 export interface IUserRepository {
   createUser(

@@ -1,6 +1,6 @@
 import { Keypair, StrKey, Horizon } from "@stellar/stellar-sdk";
-import { VerifyWalletDto } from "../dto/wallet-validation.dto";
-import { horizonConfig } from "../../../config/horizon.config";
+import { horizonConfig } from "../../../../config/horizon.config";
+import { WalletDto } from "../../presentation/dto";
 
 type WalletVerificationResult = {
   verified: boolean;
@@ -9,7 +9,7 @@ type WalletVerificationResult = {
 };
 
 export class VerifyWalletUseCase {
-  async execute(input: VerifyWalletDto): Promise<WalletVerificationResult> {
+  async execute(input: WalletDto): Promise<WalletVerificationResult> {
     const { walletAddress, signature, message } = input;
 
     // Validate public key format

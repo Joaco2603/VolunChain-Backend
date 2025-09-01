@@ -6,6 +6,7 @@ import {
   EmailVerificationUseCase,
   ResendVerificationEmailUseCase,
   SendVerificationEmailUseCase,
+  VerifyWalletUseCase,
 } from "../application/use-cases/index";
 
 import { UserRepositoryImpl } from "@/modules/user/infrastructure/repositories/user.repository.impl";
@@ -19,14 +20,14 @@ export class AuthRoutes {
 
     const controller = new AuthController(
       new SendVerificationEmailUseCase(repository),
+      new EmailVerificationUseCase(repository),
       new ResendVerificationEmailUseCase(repository),
-      new EmailVerificationUseCase(repository)
+      new VerifyWalletUseCase()
     );
 
     router.post("/login", controller.login);
     router.post("/verifiedEmail", controller.register);
     router.post("/resendVerificationEmail", controller.resendVerificationEmail);
-
     router.post("/verifyEmail", controller.verifyEmail);
 
     return router;

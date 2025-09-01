@@ -1,4 +1,5 @@
 import { BaseEntity } from "@/modules/shared/domain/entities/base.entity";
+import { AuthExceptions } from "../exceptions/auth.exceptions";
 
 export interface IAuthProps extends Partial<BaseEntity> {
   wallet: string;
@@ -24,6 +25,10 @@ export class AuthEntity extends BaseEntity {
     if (id) this.id = id;
     if (createdAt) this.createdAt = createdAt;
     if (updatedAt) this.updatedAt = updatedAt;
+
+    if (!props.wallet) {
+      throw new AuthExceptions("wallet", "Wallet is required");
+    }
 
     // ===== Asignación =====
     this.wallet = props.wallet;

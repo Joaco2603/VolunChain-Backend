@@ -1,31 +1,64 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity } from "@/modules/shared/domain/entities/base.entity";
 
-@Entity("users")
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid")
+export class UserEntity extends BaseEntity {
   id: string;
-
-  @Column()
   name: string;
-
-  @Column()
   lastName: string;
-
-  @Column({ unique: true })
   email: string;
-
-  @Column()
   password: string;
-
-  @Column({ unique: true })
   wallet: string;
-
-  @Column({ default: false })
   isVerified: boolean;
+  verificationToken: string | null;
+  verificationTokenExpires: Date | null;
 
-  @Column({ nullable: true })
-  verificationToken: string;
+  constructor(props: {
+    id: string;
+    name: string;
+    lastName: string;
+    email: string;
+    password: string;
+    wallet: string;
+    isVerified?: boolean;
+    verificationToken?: string | null;
+    verificationTokenExpires?: Date | null;
+  }) {
+    super();
+    this.id = props.id;
+    this.name = props.name;
+    this.lastName = props.lastName;
+    this.email = props.email;
+    this.password = props.password;
+    this.wallet = props.wallet;
+    this.isVerified = props.isVerified ?? false;
+    this.verificationToken = props.verificationToken ?? null;
+    this.verificationTokenExpires = props.verificationTokenExpires ?? null;
+  }
 
-  @Column({ type: "timestamp", nullable: true })
-  verificationTokenExpires: Date;
+  public static create(props: {
+    id: string;
+    name: string;
+    lastName: string;
+    email: string;
+    password: string;
+    wallet: string;
+  }): UserEntity {
+    const user = new UserEntity(props);
+    return user;
+  }
+
+  // Ejemplo de regla de negocio dentro de la entidad:
+  verifyAccount(token: string): boolean {
+    if (
+      this.verificationToken &&
+      this.verificationToken === token &&
+      this.verificationTokenExpires &&
+      this.verificationTokenExpires > new Date()
+    ) {
+      this.isVerified = true;
+      this.verificationToken = null;
+      this.verificationTokenExpires = null;
+      return true;
+    }
+    return false;
+  }
 }

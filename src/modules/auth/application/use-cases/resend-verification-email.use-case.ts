@@ -1,17 +1,15 @@
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../../utils/email.utils";
 import { IUserRepository } from "@/modules/user/application/repository/user.repository";
-import {
-  ResendVerificationEmailRequestDto,
-  ResendVerificationEmailResponseDto,
-} from "../../presentation/dto/interfaces/email-verification.interface";
+import { EmailDto } from "../../presentation/dto";
 
 export class ResendVerificationEmailUseCase {
   constructor(private userRepository: IUserRepository) {}
 
-  async execute(
-    dto: ResendVerificationEmailRequestDto
-  ): Promise<ResendVerificationEmailResponseDto> {
+  async execute(dto: EmailDto): Promise<{
+    success: boolean;
+    message: string;
+  }> {
     const { email } = dto;
     const EMAIL_SECRET = process.env.EMAIL_SECRET || "emailSecret";
 

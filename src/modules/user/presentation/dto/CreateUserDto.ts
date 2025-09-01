@@ -1,10 +1,10 @@
+import { IsStellarPublicKey } from "@/shared/infrastructure/validators/StellarPublicKey";
 import {
   IsString,
   IsEmail,
   MinLength,
   MaxLength,
   IsOptional,
-  Matches,
 } from "class-validator";
 
 export class CreateUserDto {
@@ -27,15 +27,6 @@ export class CreateUserDto {
   password: string;
 
   @IsOptional()
-  @IsString({ message: "Wallet address must be a string" })
-  @MinLength(56, {
-    message: "Stellar wallet address must be 56 characters long",
-  })
-  @MaxLength(56, {
-    message: "Stellar wallet address must be 56 characters long",
-  })
-  @Matches(/^G[A-Z2-7]{55}$/, {
-    message: "Invalid Stellar wallet address format",
-  })
+  @IsStellarPublicKey()
   wallet: string;
 }

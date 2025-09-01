@@ -1,9 +1,14 @@
 import { IsStellarPublicKey } from "@/shared/infrastructure/validators/StellarPublicKey";
 import { IsString } from "class-validator";
 
-// Class-based DTOs with validation
 export class WalletDto {
   @IsString({ message: "Wallet address must be a string" })
   @IsStellarPublicKey()
   walletAddress: string;
+
+  @IsString({ message: "Signature must be a base64 string" })
+  signature: string;
+
+  @IsString({ message: "Message must be provided" })
+  message: string;
 }

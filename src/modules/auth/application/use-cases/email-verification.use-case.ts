@@ -21,7 +21,7 @@ export class EmailVerificationUseCase {
     await sendVerificationEmail(user.email, verificationLink);
   }
 
-  async verifyEmail(token: string): Promise<boolean> {
+  async verifyToken(token: string): Promise<boolean> {
     const user = await this.userRepository.findByVerificationToken(token);
     if (!user) throw new Error("Invalid or expired token");
 
