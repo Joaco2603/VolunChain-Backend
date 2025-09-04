@@ -54,23 +54,37 @@ export class UserEntity extends BaseEntity {
     password: string;
     wallet: string;
   }): UserEntity {
+    // Validate fields
+    if (!props.name || props.name.trim().length === 0) {
+      throw new Error("name is required");
+    }
+    if (!props.email || props.email.trim().length === 0) {
+      throw new Error("email is required");
+    }
+    if (!props.password || props.password.trim().length === 0) {
+      throw new Error("password is required");
+    }
+    if (!props.wallet || props.wallet.trim().length === 0) {
+      throw new Error("wallet is required");
+    }
+
     const user = new UserEntity(props);
     return user;
   }
 
-  // Ejemplo de regla de negocio dentro de la entidad:
-  verifyAccount(token: string): boolean {
-    if (
-      this.verificationToken &&
-      this.verificationToken === token &&
-      this.verificationTokenExpires &&
-      this.verificationTokenExpires > new Date()
-    ) {
-      this.isVerified = true;
-      this.verificationToken = null;
-      this.verificationTokenExpires = null;
-      return true;
-    }
-    return false;
-  }
+  // // Ejemplo de regla de negocio dentro de la entidad:
+  // verifyAccount(token: string): boolean {
+  //   if (
+  //     this.verificationToken &&
+  //     this.verificationToken === token &&
+  //     this.verificationTokenExpires &&
+  //     this.verificationTokenExpires > new Date()
+  //   ) {
+  //     this.isVerified = true;
+  //     this.verificationToken = null;
+  //     this.verificationTokenExpires = null;
+  //     return true;
+  //   }
+  //   return false;
+  // }
 }

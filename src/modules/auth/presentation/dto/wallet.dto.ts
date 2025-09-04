@@ -1,4 +1,4 @@
-import { IsStellarPublicKey } from "@/shared/infrastructure/validators/StellarPublicKey";
+import { IsStellarPublicKey } from "@/shared/validators/StellarPublicKey";
 import { IsString } from "class-validator";
 
 export class WalletDto {

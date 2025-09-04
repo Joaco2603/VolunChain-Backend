@@ -20,7 +20,7 @@ export interface IUserRepository {
     token: string,
     expires: Date
   ): Promise<void>;
-  updateUser(data: UpdateUserDto): Promise<void>;
+  updateUser(id: string, data: UpdateUserDto): Promise<void>;
   deleteUser(id: string): Promise<void>;
   findByVerificationToken(token: string): Promise<UserEntity | null>;
   findAll(page: number, pageSize: number): Promise<UserEntity[]>;

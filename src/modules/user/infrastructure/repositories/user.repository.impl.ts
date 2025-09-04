@@ -1,9 +1,48 @@
 import { PrismaClient } from "@prisma/client";
 import { IUserRepository } from "../../application/repository/user.repository";
-import { UserEntity } from "../../domain/entities/user.entity";
+import { UserEntity } from "../../domain/entities/User.entity";
+import { UpdateUserDto } from "../../presentation/dto";
 
 export class UserRepositoryImpl implements IUserRepository {
   constructor(private readonly prisma: PrismaClient) {}
+
+  async updateUser(id: string, data: UpdateUserDto): Promise<void> {
+    await this.prisma.user.update({
+      where: { id },
+      data: {
+        name: data.name,
+        lastName: data.lastName,
+        email: data.email,
+        password: data.password,
+        wallet: data.wallet,
+        updatedAt: new Date(),
+      },
+    });
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    await this.prisma.user.delete({
+      where: { id },
+    });
+  }
+
+  async findAll(page: number, pageSize: number): Promise<UserEntity[]> {
+    const users = await this.prisma.user.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+
+    return users.map((user: UserEntity) =>
+      UserEntity.create({
+        id: user.id,
+        name: user.name,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        wallet: user.wallet,
+      })
+    );
+  }
 
   async createUser(
     name: string,
@@ -30,7 +69,6 @@ export class UserRepositoryImpl implements IUserRepository {
       email: user.email,
       password: user.password,
       wallet: user.wallet,
-      isVerified: user.isVerified,
     });
   }
 
@@ -48,7 +86,6 @@ export class UserRepositoryImpl implements IUserRepository {
       email: user.email,
       password: user.password,
       wallet: user.wallet,
-      isVerified: user.isVerified,
     });
   }
 
@@ -66,7 +103,6 @@ export class UserRepositoryImpl implements IUserRepository {
       email: user.email,
       password: user.password,
       wallet: user.wallet,
-      isVerified: user.isVerified,
     });
   }
 
@@ -110,7 +146,6 @@ export class UserRepositoryImpl implements IUserRepository {
       email: user.email,
       password: user.password,
       wallet: user.wallet,
-      isVerified: user.isVerified,
     });
   }
 

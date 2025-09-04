@@ -5,7 +5,7 @@ import {
   MaxLength,
   IsOptional,
 } from "class-validator";
-import { IsStellarPublicKey } from "@/shared/infrastructure/validators/StellarPublicKey";
+import { IsStellarPublicKey } from "@/shared/validators/StellarPublicKey";
 
 // Class-based DTO with validation
 export class RegisterDto {
